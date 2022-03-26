@@ -7,11 +7,11 @@ import {
   Button,
   SimpleGrid,
   Flex,
+  Link,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import { useAuth, useTransactionPopup } from "@micro-stacks/react";
 import Section from "../src/components/section";
-import Link from "../src/components/link";
 import PageTransition from "../src/components/pageTransition";
 import VoteCard from "../src/components/voteCard";
 
@@ -89,7 +89,7 @@ export default function Home() {
               <VStack>
                 <Text>{ccip.description}</Text>
               </VStack>
-              <Link href={ccip.url}>
+              <Link href={ccip.url} target="_blank">
                 Read it for yourself
                 <ArrowForwardIcon marginLeft={8} />
               </Link>

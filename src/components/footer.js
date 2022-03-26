@@ -1,20 +1,9 @@
 import React from "react";
-import {
-  HStack,
-  Button,
-  useColorMode,
-  Text,
-  useColorModeValue,
-  IconButton,
-  Icon,
-} from "@chakra-ui/react";
+import { HStack, Button, useColorModeValue } from "@chakra-ui/react";
 import Container from "../components/container";
 import NextLink from "next/link";
-// import Link from "./link";
 
 const Footer = () => {
-  const date = new Date().getFullYear();
-
   function FooterLink(props) {
     const { href, name, ...rest } = props;
 
