@@ -31,10 +31,10 @@ export default function Home() {
   }, []);
 
   const ccip = {
-    title: "CCIP-01",
+    title: "CCIP-011",
     description:
-      "The current Clarity cost limits were set very conservatively in Stacks 2.0: blocks with contract-calls frequently meet one or more of these limits, which negatively affects transaction throughput. This SIP proposes an update to these cost-limits via a network upgrade and further, that the network upgrade be executed at a block height chosen by an off-chain process described in this SIP.",
-    url: "https://github.com/hirosystems/sips/blob/draft/sip-012/sips/sip-012/sip-012-cost-limits-network-upgrade.md",
+      "The Stacks blockchain is a Layer 1 blockchain connected to Bitcoin, in which miners spend Bitcoin to bid for and win a fixed amount of Stacks tokens. Stackers have the option to lock up Stacks tokens for a specified amount of time, and in turn, receive a portion of the Bitcoin spent by miners proportionate to the amount Stacked.",
+    url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
     contractAddress: "",
     contractName: "",
   };
