@@ -8,48 +8,116 @@ import {
   SimpleGrid,
   Flex,
   Link,
+  useToast,
 } from "@chakra-ui/react";
-import { ArrowForwardIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { useAuth, useTransactionPopup } from "@micro-stacks/react";
+import { ArrowForwardIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
+import {
+  useAuth,
+  useTransactionPopup,
+  useCurrentStxAddress,
+} from "@micro-stacks/react";
+// import { useStxAddresses, useAuth, useCurrentStxAddress } from "@micro-stacks/react";
+import { boolCV, principalCV } from "micro-stacks/clarity";
 import Section from "../src/components/section";
 import PageTransition from "../src/components/pageTransition";
 import VoteCard from "../src/components/voteCard";
+import { callContract, STACKS_NETWORK } from "../src/services";
+import { fPrincipal } from "../src/utils";
+
+const createYes = (voteTotals) => {
+  return [
+    {
+      label: "MIA",
+      value: voteTotals.yesMia,
+    },
+    {
+      label: "NYC",
+      value: voteTotals.yesNyc,
+    },
+  ];
+};
+
+const createNo = (voteTotals) => {
+  return [
+    {
+      label: "MIA",
+      value: voteTotals.noMia,
+    },
+    {
+      label: "NYC",
+      value: voteTotals.noNyc,
+    },
+  ];
+};
 
 export default function Home() {
+  const toast = useToast();
   const { handleContractCall } = useTransactionPopup();
   const { isSignedIn, handleSignIn } = useAuth();
-  const [inFavor, setInfavor] = useState(0);
-  const [against, setAgainst] = useState(0);
-  const [hasVoted, setHasVoted] = useState(false);
-
-  useEffect(async () => {
-    try {
-      // fetch voting data from contract
-    } catch (e) {
-      // handle error fetching voting data
-    }
-  }, []);
+  const [voteTotals, setVoteTotals] = useState();
+  const [userVote, setUserVote] = useState(false);
+  const address = useCurrentStxAddress();
 
   const ccip = {
     title: "CCIP-011",
     description:
       "The Stacks blockchain is a Layer 1 blockchain connected to Bitcoin, in which miners spend Bitcoin to bid for and win a fixed amount of Stacks tokens. Stackers have the option to lock up Stacks tokens for a specified amount of time, and in turn, receive a portion of the Bitcoin spent by miners proportionate to the amount Stacked.",
     url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
-    contractAddress: "",
-    contractName: "",
+    contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+    contractName: "citycoin-vote-v1",
   };
 
-  const handleVote = async (fn) => {
+  useEffect(async () => {
     try {
-      await handleContractCall({
-        contractAddress: ccip.contractAddress,
-        contractName: ccip.contractName,
-        functionName: fn,
-        functionArgs: [],
-      });
+      // fetch voting data from contract
+      const [totals, walletVote] = await Promise.all([
+        callContract({
+          contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+          contractName: "citycoin-vote-v1",
+          functionName: "get-proposal-votes",
+        }),
+        callContract(
+          {
+            contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+            contractName: "citycoin-vote-v1",
+            functionName: "get-voter-info",
+          },
+          [principalCV(address)]
+        ),
+      ]);
+
+      setVoteTotals(totals);
+      setUserVote(walletVote === "8000" ? false : walletVote);
     } catch (e) {
-      // handle vote error
+      // handle error fetching voting data
     }
+  }, [address]);
+
+  const handleVote = async (vote) => {
+    await handleContractCall({
+      contractAddress: ccip.contractAddress,
+      contractName: ccip.contractName,
+      functionName: "vote-on-proposal",
+      functionArgs: [boolCV(vote)],
+      network: STACKS_NETWORK,
+      onCancel: () => {
+        console.log("cancelled");
+      },
+      onFinish: (res) => {
+        toast({
+          title: "Vote broadcast!",
+          description: (
+            <Link
+              href={`https://explorer.stacks.co/txid/${res.txId}?chain=mainnet`}
+              target="_blank"
+            >{`View on explorer ${fPrincipal(res.txId)}`}</Link>
+          ),
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      },
+    });
   };
 
   return (
@@ -63,9 +131,10 @@ export default function Home() {
               <Flex width={{ base: "80%", md: "66%" }}>
                 <VoteCard
                   title="In Support"
-                  subtitle="100000 stx"
-                  description="28 votes"
+                  subtitle={`${voteTotals?.yesTotal}cc`}
+                  description={`${voteTotals?.yesCount} votes`}
                   src="https://media.giphy.com/media/Od0QRnzwRBYmDU3eEO/giphy.gif"
+                  voteTotals={voteTotals && createYes(voteTotals)}
                 />
               </Flex>
             </Flex>
@@ -75,9 +144,10 @@ export default function Home() {
                 <VoteCard
                   title="Against"
                   src="https://media.giphy.com/media/gtG7xKn2vqzufFynnl/giphy.gif"
-                  subtitle="0 stx"
-                  description="0 votes"
+                  subtitle={`${voteTotals?.noTotal}cc`}
+                  description={`${voteTotals?.noCount} votes`}
                   against
+                  voteTotals={voteTotals && createNo(voteTotals)}
                 />
               </Flex>
             </Flex>
@@ -108,7 +178,7 @@ export default function Home() {
               </Button>
             </Section>
           )}
-          {!hasVoted && isSignedIn && (
+          {!userVote && isSignedIn && (
             <Section>
               <VStack align="start" spacing={10}>
                 <Heading size="lg">Cast Your Vote</Heading>
@@ -117,7 +187,7 @@ export default function Home() {
                     isFullWidth
                     variant="outline"
                     colorScheme="red"
-                    onClick={() => handleVote("no")}
+                    onClick={() => handleVote(false)}
                   >
                     No
                     <CloseIcon marginLeft={5} fontSize={10} />
@@ -126,7 +196,7 @@ export default function Home() {
                     isFullWidth
                     variant="outline"
                     colorScheme="green"
-                    onClick={() => handleVote("yes")}
+                    onClick={() => handleVote(true)}
                   >
                     Yes
                     <CheckIcon marginLeft={5} fontSize={10} />

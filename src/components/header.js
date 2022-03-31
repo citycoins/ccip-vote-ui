@@ -7,7 +7,7 @@ import {
   useColorModeValue,
   Button,
 } from "@chakra-ui/react";
-import { useStxAddresses, useAuth } from "@micro-stacks/react";
+import { useAuth, useCurrentStxAddress } from "@micro-stacks/react";
 import ThemeToggle from "./themeToggle";
 import Link from "next/link";
 import Container from "./container";
@@ -15,7 +15,7 @@ import { fPrincipal } from "../utils";
 
 const Header = () => {
   const { handleSignOut } = useAuth();
-  const stxAddress = useStxAddresses();
+  const address = useCurrentStxAddress();
   return (
     <Box
       bg={useColorModeValue("white", "neutralD.100")}
@@ -40,13 +40,13 @@ const Header = () => {
               />
             </Link>
             <HStack spacing={2}>
-              {stxAddress?.mainnet && (
+              {address && (
                 <Button
                   variant="unstyled"
                   fontSize="sm"
                   onClick={() => handleSignOut()}
                 >
-                  {fPrincipal(stxAddress.mainnet)}
+                  {fPrincipal(address)}
                 </Button>
               )}
             </HStack>
