@@ -39,16 +39,19 @@ const ccip = {
   contractName: "citycoin-vote-v1",
   readForYourself: [
     {
-      id: "CCIP-007",
-      url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-007/ccip-007-citycoins-auth.md",
-    },
-    {
       id: "CCIP-008",
       url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-008/ccip-008-citycoins-sip-010-token-v2.md",
+      title: "CityCoins SIP-010 Token v2",
     },
     {
       id: "CCIP-009",
       url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-009/ccip-009-citycoins-vrf-v2.md",
+      title: "CityCoins VRF V2",
+    },
+    {
+      id: "CCIP-010",
+      url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-010/ccip-010-citycoins-auth-v2.md",
+      title: "CityCoins Auth V2",
     },
   ],
 };
@@ -266,8 +269,8 @@ export default function Home() {
               {ccip.readForYourself.map((read) => {
                 return (
                   <Link href={read.url} target="_blank" key={read.id}>
-                    Read {read.id} for yourself
-                    <ArrowForwardIcon marginLeft={8} />
+                    Read {read.id}: {read.title}
+                    <ArrowForwardIcon marginLeft={4} />
                   </Link>
                 );
               })}
