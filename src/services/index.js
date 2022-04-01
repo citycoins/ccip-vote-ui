@@ -2,7 +2,7 @@ import { fetchReadOnlyFunction } from "micro-stacks/api";
 import { StacksMainnet, StacksMocknet } from "micro-stacks/network";
 
 export const STACKS_NETWORK = new StacksMocknet();
-// process.env === "development" ? new StacksMocknet() : new StacksMainnet();
+// process.env === "development" || window ? new StacksMocknet() : new StacksMainnet();
 
 export async function callContract(config, args = []) {
   return fetchReadOnlyFunction(
@@ -16,4 +16,18 @@ export async function callContract(config, args = []) {
     },
     true
   );
+}
+
+export async function getStacksBlockHeight() {
+  const url = `${STACKS_NETWORK.getCoreApiUrl()}/v2/info`;
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data.stacks_tip_height;
+    });
 }

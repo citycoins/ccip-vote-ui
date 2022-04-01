@@ -1,14 +1,13 @@
 import React from "react";
-import { HStack, Button, useColorModeValue } from "@chakra-ui/react";
+import { HStack, Button, useColorModeValue, Link } from "@chakra-ui/react";
 import Container from "../components/container";
-import NextLink from "next/link";
 
 const Footer = () => {
   function FooterLink(props) {
     const { href, name, ...rest } = props;
 
     return (
-      <NextLink href={href} passHref>
+      <Link href={href} target="_blank">
         <Button
           variant="unstyled"
           {...rest}
@@ -17,21 +16,16 @@ const Footer = () => {
         >
           {name}
         </Button>
-      </NextLink>
+      </Link>
     );
   }
 
   return (
     <Container>
-      <HStack
-        justify="center"
-        w="100%"
-        display={{ base: "none", md: "flex" }}
-        my={8}
-        spacing={4}
-      >
+      <HStack justify="center" w="100%" my={8} spacing={4}>
         <FooterLink href="https://twitter.com/mineCityCoins" name="Twitter" />
         <FooterLink href="https://chat.citycoins.co" name="Discord" />
+        <FooterLink href="https://github.com/citycoins" name="Github" />
         <FooterLink href="https://docs.citycoins.co/" name="Docs" />
       </HStack>
     </Container>

@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
     >
       <ChakraProvider theme={customTheme}>
         <Header />
-        <Box as="main" pt={{ base: 16, md: 32 }} pb={{ base: 24, md: 16 }}>
+        <Box as="main" pt={{ base: 24, md: 32 }} pb={{ base: 24, md: 16 }}>
           <Component {...pageProps} />
         </Box>
         <Footer />

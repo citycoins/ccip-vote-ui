@@ -48,23 +48,25 @@ export const VoteCard = ({
             fontWeight="bold"
           >
             {title}{" "}
-            <Popover trigger="hover" placement={against ? "left" : "right"}>
-              <PopoverTrigger>
-                <InfoIcon />
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverHeader>{title} Votes</PopoverHeader>
-                <PopoverBody>
-                  {voteTotals.map((city) => {
-                    return (
-                      <Text>{`${city.label}: ${numeral(city.value).format(
-                        "0,0"
-                      )}`}</Text>
-                    );
-                  })}
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
+            {voteTotals && (
+              <Popover trigger="hover" placement={against ? "left" : "right"}>
+                <PopoverTrigger>
+                  <InfoIcon />
+                </PopoverTrigger>
+                <PopoverContent>
+                  <PopoverHeader>{title} Voting Stats</PopoverHeader>
+                  <PopoverBody>
+                    {voteTotals?.map((city) => {
+                      return (
+                        <Text key={city.label} fontSize="sm">{`${
+                          city.label
+                        }: ${numeral(city.value).format("0,0")}`}</Text>
+                      );
+                    })}
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
+            )}
           </Text>
           <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
             {subtitle}
