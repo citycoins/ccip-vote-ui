@@ -32,8 +32,11 @@ import {
 import { fPrincipal, createNo, createYes, createStatus } from "../src/utils";
 
 const ccip = {
-  description:
-    "The Stacks blockchain is a Layer 1 blockchain connected to Bitcoin, in which miners spend Bitcoin to bid for and win a fixed amount of Stacks tokens. Stackers have the option to lock up Stacks tokens for a specified amount of time, and in turn, receive a portion of the Bitcoin spent by miners proportionate to the amount Stacked.",
+  descriptions: [
+    'The CityCoins community is proposing an update to the emissions schedule for current and future CityCoins. The update will adjust/compress the emissions schedule with "halvings" based on a doubling epoch model with an initial bonus period, in which the length of each epoch is twice as long as the last following epoch 1. For more details, see CCIP-008.',
+    "This also presents the opportunity to add some minor features to the CityCoins protocol, including token divisibility, an upgraded VRF contract with performance improvements and modification to the auth contract to allow for more flexibility in the future. For more details, see CCIP-009 and CCIP-010.",
+    "Votes will be recorded by a smart contract and tallied based on the amount an address has stacked in MiamiCoin cycles 12 and 13 and NewYorKCityCoin cycles 6 and 7. The vote will start around Stacks block 55,150 and last approximately 2 weeks. For more details, see CCIP-011.",
+  ],
   url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
   contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
   contractName: "citycoin-vote-v1",
@@ -52,6 +55,11 @@ const ccip = {
       id: "CCIP-010",
       url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-010/ccip-010-citycoins-auth-v2.md",
       title: "CityCoins Auth V2",
+    },
+    {
+      id: "CCIP-011",
+      url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
+      title: "CityCoins Stacked Tokens Voting",
     },
   ],
 };
@@ -151,8 +159,13 @@ export default function Home() {
       <Box>
         <VStack spacing={10}>
           <VStack textAlign="center">
-            <Heading size="xl">Upgrade CityCoins Vote</Heading>
+            <Heading size="xl">CityCoins Upgrade Vote</Heading>
             <Skeleton isLoaded={!loading}>
+              {status !== "not_initialized" && (
+                <Text fontSize="sm">
+                  {`Voting Active Blocks ${contractStartEnd.startBlock} - ${contractStartEnd.endBlock}`}
+                </Text>
+              )}
               {status === "not_initialized" && (
                 <Text fontSize="sm">
                   {"Voting contract hasn't been deployed"}
@@ -178,7 +191,7 @@ export default function Home() {
 
               {status === "over" && (
                 <Text fontSize="sm">
-                  {`Vote ended ${over} block${over > 1 ? "s" : ""} ago`}
+                  {`Vote ended ${over} block${over == 1 ? "" : "s"} ago`}
                 </Text>
               )}
             </Skeleton>
@@ -260,7 +273,9 @@ export default function Home() {
           <Section>
             <VStack spacing={10} align="start" fontSize="1xl">
               <Heading size="lg">Description</Heading>
-              <Text>{ccip.description}</Text>
+              {ccip.descriptions.map((ele, idx) => {
+                return <Text key={idx}>{ele}</Text>;
+              })}
             </VStack>
           </Section>
           <Section>
