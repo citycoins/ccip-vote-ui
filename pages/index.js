@@ -10,6 +10,7 @@ import {
   Link,
   useToast,
   Center,
+  Skeleton,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
 import {
@@ -63,6 +64,7 @@ export default function Home() {
     startBlock: 0,
     endBlock: 0,
   });
+  const [loading, setLoading] = useState(true);
   const [blockHeight, setBlockHeight] = useState(0);
   const [voteTotals, setVoteTotals] = useState();
   const [userVoteStats, setUserVote] = useState(false);
@@ -104,6 +106,8 @@ export default function Home() {
     } catch (e) {
       // handle error fetching voting data
       console.info(e);
+    } finally {
+      setLoading(false);
     }
   }, [address]);
 
@@ -131,46 +135,77 @@ export default function Home() {
     });
   };
 
+  const active = contractStartEnd?.endBlock - blockHeight;
+  const not_started_yet = contractStartEnd?.startBlock - blockHeight;
+  const over = blockHeight - contractStartEnd?.endBlock;
+
   return (
     <PageTransition>
       <Box>
         <VStack spacing={10}>
           <VStack textAlign="center">
             <Heading size="xl">Upgrade CityCoins Vote</Heading>
-            <Text fontSize="sm">{`Current Block Height ${blockHeight}`}</Text>
-            {status !== "not_initialized" && (
-              <Text fontSize="sm">
-                {`Start: ${contractStartEnd?.startBlock} - End: ${contractStartEnd?.endBlock}`}
-              </Text>
-            )}
+            <Skeleton isLoaded={!loading}>
+              {/* <Text fontSize="sm">{`Current Block Height ${blockHeight}`}</Text> */}
+              {status === "not_initialized" && (
+                <Text fontSize="sm">Voting contract hasn't been deployed</Text>
+              )}
+              {status === "active" && (
+                <>
+                  <Text fontSize="sm">
+                    {`Voting Active! Vote ends in ${active} block${
+                      active > 1 ? "s" : ""
+                    }`}
+                  </Text>
+                </>
+              )}
+
+              {status === "not_started_yet" && (
+                <Text fontSize="sm">
+                  {`Vote starts in ${not_started_yet} block${
+                    not_started_yet > 1 ? "s" : ""
+                  }`}
+                </Text>
+              )}
+
+              {status === "over" && (
+                <Text fontSize="sm">
+                  {`Vote ended ${over} block${over > 1 ? "s" : ""} ago`}
+                </Text>
+              )}
+            </Skeleton>
           </VStack>
+
           <Section>
-            {/* Votes For */}
-            <Flex width="100%">
-              <Flex width={{ base: "80%", md: "66%" }}>
-                <VoteCard
-                  title="In Support"
-                  subtitle={numeral(voteTotals?.yesTotal).format("0,0")}
-                  description={`${voteTotals?.yesCount || 0} votes`}
-                  src="https://media.giphy.com/media/Od0QRnzwRBYmDU3eEO/giphy.gif"
-                  voteTotals={voteTotals && createYes(voteTotals)}
-                />
+            <Skeleton isLoaded={!loading} width="100%">
+              {/* Votes For */}
+              <Flex width="100%">
+                <Flex width={{ base: "80%", md: "66%" }}>
+                  <VoteCard
+                    title="In Support"
+                    subtitle={numeral(voteTotals?.yesTotal).format("0,0")}
+                    description={`${voteTotals?.yesCount || 0} votes`}
+                    src="https://media.giphy.com/media/Od0QRnzwRBYmDU3eEO/giphy.gif"
+                    voteTotals={voteTotals && createYes(voteTotals)}
+                  />
+                </Flex>
               </Flex>
-            </Flex>
-            {/* Votes Against */}
-            <Flex width="100%" justifyContent="flex-end" mt="1">
-              <Flex width={{ base: "80%", md: "66%" }}>
-                <VoteCard
-                  title="Against"
-                  src="https://media.giphy.com/media/gtG7xKn2vqzufFynnl/giphy.gif"
-                  subtitle={numeral(voteTotals?.noTotal).format("0,0")}
-                  description={`${voteTotals?.noCount || 0} votes`}
-                  against
-                  voteTotals={voteTotals && createNo(voteTotals)}
-                />
+              {/* Votes Against */}
+              <Flex width="100%" justifyContent="flex-end" mt="1">
+                <Flex width={{ base: "80%", md: "66%" }}>
+                  <VoteCard
+                    title="Against"
+                    src="https://media.giphy.com/media/gtG7xKn2vqzufFynnl/giphy.gif"
+                    subtitle={numeral(voteTotals?.noTotal).format("0,0")}
+                    description={`${voteTotals?.noCount || 0} votes`}
+                    against
+                    voteTotals={voteTotals && createNo(voteTotals)}
+                  />
+                </Flex>
               </Flex>
-            </Flex>
+            </Skeleton>
           </Section>
+
           {/* CCIP Voting */}
           {!isSignedIn && status === "active" && (
             <Section>
