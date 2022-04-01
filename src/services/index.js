@@ -1,7 +1,7 @@
 import { fetchReadOnlyFunction } from "micro-stacks/api";
 import { StacksMainnet, StacksMocknet } from "micro-stacks/network";
 
-export const STACKS_NETWORK = new StacksMocknet();
+export const STACKS_NETWORK = new StacksMainnet();
 // process.env === "development" || window ? new StacksMocknet() : new StacksMainnet();
 
 export async function callContract(config, args = []) {
