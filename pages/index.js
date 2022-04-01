@@ -274,7 +274,11 @@ export default function Home() {
             <VStack spacing={10} align="start" fontSize="1xl">
               <Heading size="lg">Description</Heading>
               {ccip.descriptions.map((ele, idx) => {
-                return <Text key={idx}>{ele}</Text>;
+                return (
+                  <Text fontSize={{ base: "xs", md: "sm" }} key={idx}>
+                    {ele}
+                  </Text>
+                );
               })}
             </VStack>
           </Section>
@@ -283,7 +287,12 @@ export default function Home() {
               <Heading size="lg">CCIPS</Heading>
               {ccip.readForYourself.map((read) => {
                 return (
-                  <Link href={read.url} target="_blank" key={read.id}>
+                  <Link
+                    href={read.url}
+                    target="_blank"
+                    key={read.id}
+                    fontSize={{ base: "xs", md: "sm" }}
+                  >
                     Read {read.id}: {read.title}
                     <ArrowForwardIcon marginLeft={4} />
                   </Link>
