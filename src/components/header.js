@@ -30,7 +30,7 @@ const Header = () => {
       <Container>
         <VStack align="start" spacing={0}>
           <HStack justify="space-between" w="100%" h={16}>
-            <Link href="/">
+            <Link passHref href="/">
               <Avatar
                 name="CityCoins"
                 size="sm"

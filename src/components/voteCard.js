@@ -36,6 +36,7 @@ export const VoteCard = ({
       <HStack flexDirection={against ? "row-reverse" : undefined}>
         <Image
           src={src}
+          alt="vote img"
           borderRadius="full"
           boxSize={{ base: "100px", md: "150px" }}
           boxShadow="xs"

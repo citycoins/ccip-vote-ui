@@ -70,45 +70,49 @@ export default function Home() {
   const [userVoteStats, setUserVote] = useState(false);
   const [status, setStatus] = useState(votingStates[0]);
 
-  useEffect(async () => {
-    try {
-      const currBlockHeight = await getStacksBlockHeight();
-      setBlockHeight(currBlockHeight);
-      if (address) {
-        const userVotes = await callContract(
-          {
+  useEffect(() => {
+    const loadContractData = async () => {
+      try {
+        const currBlockHeight = await getStacksBlockHeight();
+        setBlockHeight(currBlockHeight);
+        if (address) {
+          const userVotes = await callContract(
+            {
+              contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+              contractName: "citycoin-vote-v1",
+              functionName: "get-voter-info",
+            },
+            [principalCV(address)]
+          );
+          setUserVote(userVotes === "8000" ? false : userVotes);
+        }
+
+        // fetch voting data from contract
+        const [totals, startEnd] = await Promise.all([
+          callContract({
             contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
             contractName: "citycoin-vote-v1",
-            functionName: "get-voter-info",
-          },
-          [principalCV(address)]
-        );
-        setUserVote(userVotes === "8000" ? false : userVotes);
+            functionName: "get-proposal-votes",
+          }),
+          callContract({
+            contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+            contractName: "citycoin-vote-v1",
+            functionName: "get-vote-blocks",
+          }),
+        ]);
+
+        setContractStartEnd(startEnd);
+        setStatus(createStatus(startEnd, currBlockHeight));
+        setVoteTotals(totals);
+      } catch (e) {
+        // handle error fetching voting data
+        console.info(e);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      // fetch voting data from contract
-      const [totals, startEnd] = await Promise.all([
-        callContract({
-          contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
-          contractName: "citycoin-vote-v1",
-          functionName: "get-proposal-votes",
-        }),
-        callContract({
-          contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
-          contractName: "citycoin-vote-v1",
-          functionName: "get-vote-blocks",
-        }),
-      ]);
-
-      setContractStartEnd(startEnd);
-      setStatus(createStatus(startEnd, currBlockHeight));
-      setVoteTotals(totals);
-    } catch (e) {
-      // handle error fetching voting data
-      console.info(e);
-    } finally {
-      setLoading(false);
-    }
+    loadContractData();
   }, [address]);
 
   const handleVote = async (vote) => {
@@ -146,9 +150,10 @@ export default function Home() {
           <VStack textAlign="center">
             <Heading size="xl">Upgrade CityCoins Vote</Heading>
             <Skeleton isLoaded={!loading}>
-              {/* <Text fontSize="sm">{`Current Block Height ${blockHeight}`}</Text> */}
               {status === "not_initialized" && (
-                <Text fontSize="sm">Voting contract hasn't been deployed</Text>
+                <Text fontSize="sm">
+                  {"Voting contract hasn't been deployed"}
+                </Text>
               )}
               {status === "active" && (
                 <>
