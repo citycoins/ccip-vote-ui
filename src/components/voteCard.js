@@ -11,6 +11,7 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
 import numeral from "numeral";
@@ -22,6 +23,7 @@ export const VoteCard = ({
   src = "",
   against,
   voteTotals = [],
+  loading,
 }) => {
   return (
     <Stack
@@ -50,7 +52,7 @@ export const VoteCard = ({
           >
             {title}{" "}
             {voteTotals && (
-              <Popover trigger="hover" placement={against ? "left" : "right"}>
+              <Popover trigger="hover">
                 <PopoverTrigger>
                   <InfoIcon />
                 </PopoverTrigger>
@@ -70,14 +72,18 @@ export const VoteCard = ({
             )}
           </Text>
           <Text fontSize={{ base: "lg", md: "xl" }} fontWeight="bold">
-            {subtitle}
+            <SkeletonText noOfLines={1} isLoaded={!loading}>
+              {subtitle}
+            </SkeletonText>
           </Text>
           <Text
             fontSize={{ base: "md", md: "lg" }}
             color={useColorModeValue("neutral.1000", "neutralD.1000")}
             fontWeight="bold"
           >
-            {description}
+            <SkeletonText noOfLines={1} isLoaded={!loading}>
+              {description}
+            </SkeletonText>
           </Text>
         </VStack>
       </HStack>

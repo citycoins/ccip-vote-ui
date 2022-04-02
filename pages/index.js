@@ -11,6 +11,7 @@ import {
   useToast,
   Center,
   Skeleton,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
 import {
@@ -160,7 +161,7 @@ export default function Home() {
         <VStack spacing={10}>
           <VStack textAlign="center">
             <Heading size="xl">CityCoins Upgrade Vote</Heading>
-            <Skeleton isLoaded={!loading}>
+            <SkeletonText isLoaded={!loading} noOfLines={1}>
               {status !== "not_initialized" && (
                 <Text fontSize="sm">
                   {`Voting Active Blocks ${contractStartEnd.startBlock} - ${contractStartEnd.endBlock}`}
@@ -194,37 +195,37 @@ export default function Home() {
                   {`Vote ended ${over} block${over == 1 ? "" : "s"} ago`}
                 </Text>
               )}
-            </Skeleton>
+            </SkeletonText>
           </VStack>
 
           <Section>
-            <Skeleton isLoaded={!loading} width="100%">
-              {/* Votes For */}
-              <Flex width="100%">
-                <Flex width={{ base: "80%", md: "66%" }}>
-                  <VoteCard
-                    title="In Support"
-                    subtitle={numeral(voteTotals?.yesTotal).format("0,0")}
-                    description={`${voteTotals?.yesCount || 0} votes`}
-                    src="https://media.giphy.com/media/Od0QRnzwRBYmDU3eEO/giphy.gif"
-                    voteTotals={voteTotals && createYes(voteTotals)}
-                  />
-                </Flex>
+            {/* Votes For */}
+            <Flex width="100%">
+              <Flex width={{ base: "100%", md: "66%" }}>
+                <VoteCard
+                  title="In Support"
+                  subtitle={numeral(voteTotals?.yesTotal).format("0,0")}
+                  description={`${voteTotals?.yesCount || 0} votes`}
+                  src="https://media.giphy.com/media/Od0QRnzwRBYmDU3eEO/giphy.gif"
+                  voteTotals={voteTotals && createYes(voteTotals)}
+                  loading={loading}
+                />
               </Flex>
-              {/* Votes Against */}
-              <Flex width="100%" justifyContent="flex-end" mt="1">
-                <Flex width={{ base: "80%", md: "66%" }}>
-                  <VoteCard
-                    title="Against"
-                    src="https://media.giphy.com/media/gtG7xKn2vqzufFynnl/giphy.gif"
-                    subtitle={numeral(voteTotals?.noTotal).format("0,0")}
-                    description={`${voteTotals?.noCount || 0} votes`}
-                    against
-                    voteTotals={voteTotals && createNo(voteTotals)}
-                  />
-                </Flex>
+            </Flex>
+            {/* Votes Against */}
+            <Flex width="100%" justifyContent="flex-end" mt="1">
+              <Flex width={{ base: "100%", md: "66%" }}>
+                <VoteCard
+                  title="Against"
+                  src="https://media.giphy.com/media/gtG7xKn2vqzufFynnl/giphy.gif"
+                  subtitle={numeral(voteTotals?.noTotal).format("0,0")}
+                  description={`${voteTotals?.noCount || 0} votes`}
+                  against
+                  voteTotals={voteTotals && createNo(voteTotals)}
+                  loading={loading}
+                />
               </Flex>
-            </Skeleton>
+            </Flex>
           </Section>
 
           {/* CCIP Voting */}
@@ -275,7 +276,7 @@ export default function Home() {
               <Heading size="lg">Description</Heading>
               {ccip.descriptions.map((ele, idx) => {
                 return (
-                  <Text fontSize={{ base: "xs", md: "sm" }} key={idx}>
+                  <Text fontSize={{ base: "xs", md: "lg" }} key={idx}>
                     {ele}
                   </Text>
                 );
@@ -291,7 +292,7 @@ export default function Home() {
                     href={read.url}
                     target="_blank"
                     key={read.id}
-                    fontSize={{ base: "xs", md: "sm" }}
+                    fontSize={{ base: "xs", md: "lg" }}
                   >
                     Read {read.id}: {read.title}
                     <ArrowForwardIcon marginLeft={4} />
