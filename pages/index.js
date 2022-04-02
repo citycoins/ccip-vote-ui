@@ -238,7 +238,7 @@ export default function Home() {
                   colorScheme="green"
                   onClick={() => handleSignIn()}
                 >
-                  Login To Vote
+                  Sign In To Vote
                 </Button>
               </Center>
             </Section>
