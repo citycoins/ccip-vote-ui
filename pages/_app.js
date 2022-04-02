@@ -24,12 +24,12 @@ function MyApp({ Component, pageProps }) {
           content="Proposed protocol upgrades include on-chain voting and a compressed emissions schedule."
         />
         {/* <!-- Google / Search Engine Meta Tags --> */}
-        <meta itemprop="name" content="Vote on the CityCoins Upgrade!" />
+        <meta itemProp="name" content="Vote on the CityCoins Upgrade!" />
         <meta
-          itemprop="description"
+          itemProp="description"
           content="Proposed protocol upgrades include on-chain voting and a compressed emissions schedule."
         />
-        <meta itemprop="image" content="/citycoins-protocol-upgrade.png" />
+        <meta itemProp="image" content="/citycoins-protocol-upgrade.png" />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://api.citycoins.co" />
         <meta property="og:type" content="website" />
