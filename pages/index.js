@@ -10,7 +10,6 @@ import {
   Link,
   useToast,
   Center,
-  Skeleton,
   SkeletonText,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
@@ -90,7 +89,7 @@ export default function Home() {
         if (address) {
           const userVotes = await callContract(
             {
-              contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+              contractAddress: ccip.contractAddress,
               contractName: "citycoin-vote-v1",
               functionName: "get-voter-info",
             },
@@ -102,12 +101,12 @@ export default function Home() {
         // fetch voting data from contract
         const [totals, startEnd] = await Promise.all([
           callContract({
-            contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+            contractAddress: ccip.contractAddress,
             contractName: "citycoin-vote-v1",
             functionName: "get-proposal-votes",
           }),
           callContract({
-            contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+            contractAddress: ccip.contractAddress,
             contractName: "citycoin-vote-v1",
             functionName: "get-vote-blocks",
           }),
