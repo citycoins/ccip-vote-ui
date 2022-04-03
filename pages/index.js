@@ -39,7 +39,7 @@ const ccip = {
     "Votes will be recorded by a smart contract and tallied based on the amount an address has stacked in MiamiCoin cycles 12 and 13 and NewYorKCityCoin cycles 6 and 7. The vote will start around Stacks block 55,150 and last approximately 2 weeks. For more details, see CCIP-011.",
   ],
   url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
-  contractAddress: "ST1HHSDYJ0SGAM6K2W01ZF5K7AJFKWMJNH0SH3NP9",
+  contractAddress: "SP34FHX44NK9KZ8KJC08WR2NHP8NEGFTTT7MTH7XD",
   contractName: "citycoin-vote-v1",
   readForYourself: [
     {
