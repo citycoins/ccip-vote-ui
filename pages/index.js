@@ -168,7 +168,7 @@ export default function Home() {
               )}
               {status === "not_initialized" && (
                 <Text fontSize="sm">
-                  {"Voting contract hasn't been deployed"}
+                  {"Voting contract hasn't been initialized"}
                 </Text>
               )}
               {status === "active" && (
