@@ -39,7 +39,7 @@ const ccip = {
   ],
   url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
   contractAddress: "SP34FHX44NK9KZ8KJC08WR2NHP8NEGFTTT7MTH7XD",
-  contractName: "citycoin-vote-v1",
+  contractName: "citycoins-vote-v1",
   readForYourself: [
     {
       id: "CCIP-008",
@@ -90,7 +90,7 @@ export default function Home() {
           const userVotes = await callContract(
             {
               contractAddress: ccip.contractAddress,
-              contractName: "citycoin-vote-v1",
+              contractName: ccip.contractName,
               functionName: "get-voter-info",
             },
             [principalCV(address)]
@@ -102,12 +102,12 @@ export default function Home() {
         const [totals, startEnd] = await Promise.all([
           callContract({
             contractAddress: ccip.contractAddress,
-            contractName: "citycoin-vote-v1",
+            contractName: ccip.contractName,
             functionName: "get-proposal-votes",
           }),
           callContract({
             contractAddress: ccip.contractAddress,
-            contractName: "citycoin-vote-v1",
+            contractName: ccip.contractName,
             functionName: "get-vote-blocks",
           }),
         ]);
