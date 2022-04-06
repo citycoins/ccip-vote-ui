@@ -37,28 +37,28 @@ const ccip = {
     "This also presents the opportunity to add some minor features to the CityCoins protocol, including token divisibility, an upgraded VRF contract with performance improvements and modification to the auth contract to allow for more flexibility in the future. For more details, see CCIP-009 and CCIP-010.",
     "Votes will be recorded by a smart contract and tallied based on the amount an address has stacked in MiamiCoin cycles 12 and 13 and NewYorKCityCoin cycles 6 and 7. The vote will start around Stacks block 55,150 and last approximately 2 weeks. For more details, see CCIP-011.",
   ],
-  url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
+  url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
   contractAddress: "SP34FHX44NK9KZ8KJC08WR2NHP8NEGFTTT7MTH7XD",
   contractName: "citycoins-vote-v1",
   readForYourself: [
     {
       id: "CCIP-008",
-      url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-008/ccip-008-citycoins-sip-010-token-v2.md",
+      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-008/ccip-008-citycoins-sip-010-token-v2.md",
       title: "CityCoins SIP-010 Token v2",
     },
     {
       id: "CCIP-009",
-      url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-009/ccip-009-citycoins-vrf-v2.md",
+      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-009/ccip-009-citycoins-vrf-v2.md",
       title: "CityCoins VRF V2",
     },
     {
       id: "CCIP-010",
-      url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-010/ccip-010-citycoins-auth-v2.md",
+      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-010/ccip-010-citycoins-auth-v2.md",
       title: "CityCoins Auth V2",
     },
     {
       id: "CCIP-011",
-      url: "https://github.com/citycoins/governance/blob/feat/community-upgrade-1/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
+      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
       title: "CityCoins Stacked Tokens Voting",
     },
   ],
