@@ -2,19 +2,14 @@ export function fPrincipal(princ) {
   return `${princ?.substr(0, 5)}...${princ?.substr(princ.length - 5)}`;
 }
 
+export const micro = 1000000;
+export const fromMicro = (ustx) => (ustx / micro).toFixed(6);
+
 export const createYes = (voteTotals) => {
   return [
     {
-      label: "MIA",
-      value: voteTotals.yesMia,
-    },
-    {
-      label: "NYC",
-      value: voteTotals.yesNyc,
-    },
-    {
       label: "Totals",
-      value: voteTotals.yesTotal,
+      value: fromMicro(voteTotals.yesTotal),
     },
     {
       label: "Voters",
@@ -26,16 +21,8 @@ export const createYes = (voteTotals) => {
 export const createNo = (voteTotals) => {
   return [
     {
-      label: "MIA",
-      value: voteTotals.noMia,
-    },
-    {
-      label: "NYC",
-      value: voteTotals.noNyc,
-    },
-    {
       label: "Totals",
-      value: voteTotals.noTotal,
+      value: fromMicro(voteTotals.noTotal),
     },
     {
       label: "Voters",

@@ -29,10 +29,13 @@ import {
   STACKS_NETWORK,
 } from "../src/services";
 
-import { fPrincipal, createNo, createYes, createStatus } from "../src/utils";
-
-const micro = 1000000;
-const fromMicro = (ustx) => (ustx / micro).toFixed(6);
+import {
+  fPrincipal,
+  createNo,
+  createYes,
+  createStatus,
+  fromMicro,
+} from "../src/utils";
 
 const ccip = {
   descriptions: [
@@ -114,6 +117,7 @@ export default function Home() {
         setContractStartEnd(startEnd);
         setStatus(createStatus(startEnd, currBlockHeight));
         setVoteTotals(totals);
+        console.log(`totals: ${JSON.stringify(totals)}`);
       } catch (e) {
         // handle error fetching voting data
         console.info(e);
