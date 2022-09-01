@@ -5,48 +5,42 @@ import Footer from "../src/components/footer";
 import Header from "../src/components/header";
 import customTheme from "../theme";
 
+// generalize SEO meta tags
+const title = "Vote on the CityCoins Upgrade!";
+const description =
+  "Proposed protocol upgrades include 2% emissions model and moving treasuries to smart contract vaults.";
+const image = "/citycoins-protocol-upgrade.png";
+
 function MyApp({ Component, pageProps }) {
   return (
     <MicroStacksProvider
       authOptions={{
         appDetails: {
-          name: "ccips",
+          name: "ccip-012",
           icon: "logo",
         },
       }}
     >
       <Head>
         {/* <!-- Title and Description --> */}
-        <title>Vote on the CityCoins Upgrade!</title>
-        <meta name="title" content="Vote on the CityCoins Upgrade!" />
-        <meta
-          name="description"
-          content="Proposed protocol upgrades include on-chain voting and a compressed emissions schedule."
-        />
+        <title>{title}</title>
+        <meta name="title" content={title} />
+        <meta name="description" content={description} />
         {/* <!-- Google / Search Engine Meta Tags --> */}
-        <meta itemProp="name" content="Vote on the CityCoins Upgrade!" />
-        <meta
-          itemProp="description"
-          content="Proposed protocol upgrades include on-chain voting and a compressed emissions schedule."
-        />
-        <meta itemProp="image" content="/citycoins-protocol-upgrade.png" />
+        <meta itemProp="name" content={title} />
+        <meta itemProp="description" content={description} />
+        <meta itemProp="image" content={image} />
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://api.citycoins.co" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Vote on the CityCoins Upgrade!" />
-        <meta
-          property="og:description"
-          content="Proposed protocol upgrades include on-chain voting and a compressed emissions schedule."
-        />
-        <meta property="og:image" content="/citycoins-protocol-upgrade.png" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={image} />
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Vote on the CityCoins Upgrade!" />
-        <meta
-          name="twitter:description"
-          content="Proposed protocol upgrades include on-chain voting and a compressed emissions schedule."
-        />
-        <meta name="twitter:image" content="/citycoins-protocol-upgrade.png" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={image} />
         {/* <!-- Meta Tags Above Generated via http://heymeta.com --> */}
         <meta name="robots" content="index, follow" />
         <meta name="language" content="English" />

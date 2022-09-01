@@ -31,35 +31,34 @@ import {
 
 import { fPrincipal, createNo, createYes, createStatus } from "../src/utils";
 
+const micro = 1000000;
+const fromMicro = (ustx) => (ustx / micro).toFixed(6);
+
 const ccip = {
   descriptions: [
-    'The CityCoins community is proposing an update to the emissions schedule for current and future CityCoins. The update will adjust/compress the emissions schedule with "halvings" based on a doubling epoch model with an initial bonus period, in which the length of each epoch is twice as long as the last following epoch 1. For more details, see CCIP-008.',
-    "This also presents the opportunity to add some minor features to the CityCoins protocol, including token divisibility, an upgraded VRF contract with performance improvements and modification to the auth contract to allow for more flexibility in the future. For more details, see CCIP-009 and CCIP-010.",
-    "Votes will be recorded by a smart contract and tallied based on the amount an address has stacked in MiamiCoin cycles 12 and 13 and NewYorKCityCoin cycles 6 and 7. The vote will start around Stacks block 55,150 and last approximately 2 weeks. For more details, see CCIP-011.",
+    "Over the summer, CityCoiners have been working on a plan to stabilize the protocol and optimize for future development, experimentation, and growth.",
+    "Community discussions and feedback have resulted in a four-phase proposal designed to stabilize the protocol. The phases have been split into two separate CityCoins Improvement Proposals (CCIPs).",
+    "CCIP-012 is the first of two proposals that will be voted on by the community. This proposal includes a 2% emissions model and moving treasuries to smart contract vaults.",
+    "Votes will be recorded by a smart contract and tallied based on the amount an address has stacked in MiamiCoin cycles 21 and 22 and NewYorKCityCoin cycles 15 and 16.",
+    "The vote will start at Stacks block 74,300 and last approximately 2 weeks. For more details, see CCIP-012.",
   ],
-  url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
-  contractAddress: "SP34FHX44NK9KZ8KJC08WR2NHP8NEGFTTT7MTH7XD",
-  contractName: "citycoins-vote-v1",
+  contractAddress: "SP119FQPVQ39AKVMC0CN3Q1ZN3ZMCGMBR52ZS5K6E",
+  contractName: "operational-chocolate-seahorse",
   readForYourself: [
     {
-      id: "CCIP-008",
-      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-008/ccip-008-citycoins-sip-010-token-v2.md",
-      title: "CityCoins SIP-010 Token v2",
+      id: "CCIP-012",
+      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-012/ccip-012-stabilize-emissions-and-treasuries.md",
+      title: "Stabilize Emissions and Treasuries",
     },
     {
-      id: "CCIP-009",
-      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-009/ccip-009-citycoins-vrf-v2.md",
-      title: "CityCoins VRF V2",
+      id: "Blog",
+      url: "https://www.citycoins.co/post/citycoins-protocol-upgrade-2",
+      title: "CityCoins Protocol Upgrade #2",
     },
     {
-      id: "CCIP-010",
-      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-010/ccip-010-citycoins-auth-v2.md",
-      title: "CityCoins Auth V2",
-    },
-    {
-      id: "CCIP-011",
-      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-011/ccip-011-citycoins-stacked-tokens-voting.md",
-      title: "CityCoins Stacked Tokens Voting",
+      id: "Status",
+      url: "https://github.com/citycoins/governance/discussions/9",
+      title: "CCIP-012 / CCIP-013 Remaining Work Items",
     },
   ],
 };
@@ -203,9 +202,11 @@ export default function Home() {
               <Flex width={{ base: "100%", md: "66%" }}>
                 <VoteCard
                   title="In Support"
-                  subtitle={numeral(voteTotals?.yesTotal).format("0,0")}
+                  subtitle={numeral(fromMicro(voteTotals?.yesTotal)).format(
+                    "0,0"
+                  )}
                   description={`${voteTotals?.yesCount || 0} votes`}
-                  src="https://media.giphy.com/media/Od0QRnzwRBYmDU3eEO/giphy.gif"
+                  src="https://media.giphy.com/media/3o6UB3VhArvomJHtdK/giphy.gif"
                   voteTotals={voteTotals && createYes(voteTotals)}
                   loading={loading}
                 />
@@ -216,8 +217,10 @@ export default function Home() {
               <Flex width={{ base: "100%", md: "66%" }}>
                 <VoteCard
                   title="Against"
-                  src="https://media.giphy.com/media/gtG7xKn2vqzufFynnl/giphy.gif"
-                  subtitle={numeral(voteTotals?.noTotal).format("0,0")}
+                  src="https://media.giphy.com/media/3o7TKGVqdQdyGb3aDe/giphy.gif"
+                  subtitle={numeral(fromMicro(voteTotals?.noTotal)).format(
+                    "0,0"
+                  )}
                   description={`${voteTotals?.noCount || 0} votes`}
                   against
                   voteTotals={voteTotals && createNo(voteTotals)}
