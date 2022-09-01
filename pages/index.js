@@ -160,26 +160,22 @@ export default function Home() {
   const timeRemaining = (currentBlock, targetBlock) => {
     let suffix = "";
     let blockDifference = +targetBlock - +currentBlock;
+    if (blockDifference < 0) {
+      suffix = "passed";
+      blockDifference *= -1;
+    } else {
+      suffix = "remaining";
+    }
     const minutes = blockDifference * 10;
     const hours = minutes / 60;
     const days = hours / 24;
-    if (blockDifference < 0) {
-      suffix = " passed";
-      blockDifference *= -1;
-    } else {
-      suffix = " remaining";
-    }
     const message = () => {
       if (days > 1) return `${days.toFixed(2)} days`;
       if (hours > 1) return `${hours.toFixed(2)} hours`;
-      return `${minutes.toFixed(2)} minutes`;
+      return `${minutes.toFixed(0)} minutes`;
     };
-    return `${message()}${suffix}`;
+    return `${message()} ${suffix}`;
   };
-
-  // if days greater than 1, return days
-  // if hours greater than 1, return hours
-  // return minutes
 
   return (
     <PageTransition>
@@ -187,7 +183,7 @@ export default function Home() {
         <VStack spacing={10}>
           <VStack textAlign="center">
             <Heading size="xl">CityCoins Upgrade Vote</Heading>
-            <SkeletonText isLoaded={!loading} noOfLines={1}>
+            <SkeletonText isLoaded={!loading} noOfLines={2}>
               {status !== "not_initialized" && (
                 <Text fontSize="sm">
                   {`Voting Period: ${contractStartEnd.startBlock.toLocaleString()} - ${contractStartEnd.endBlock.toLocaleString()}`}
@@ -205,6 +201,12 @@ export default function Home() {
                       active > 1 ? "s" : ""
                     }`}
                   </Text>
+                  {contractStartEnd.endBlock && (
+                    <Text fontSize="sm">{`est. time: ${timeRemaining(
+                      blockHeight,
+                      contractStartEnd.endBlock
+                    )}`}</Text>
+                  )}
                 </>
               )}
               {status === "not_started_yet" && (
@@ -214,7 +216,7 @@ export default function Home() {
                       not_started_yet > 1 ? "s" : ""
                     }`}
                   </Text>
-                  {contractStartEnd.endBlock && (
+                  {contractStartEnd.startBlock && (
                     <Text fontSize="sm">{`est. time: ${timeRemaining(
                       blockHeight,
                       contractStartEnd.startBlock
@@ -223,11 +225,19 @@ export default function Home() {
                 </>
               )}
               {status === "over" && (
-                <Text fontSize="sm">
-                  {`Vote ended ${over.toLocaleString()} block${
-                    over == 1 ? "" : "s"
-                  } ago`}
-                </Text>
+                <>
+                  <Text fontSize="sm">
+                    {`Vote ended ${over.toLocaleString()} block${
+                      over == 1 ? "" : "s"
+                    } ago`}
+                  </Text>
+                  {contractStartEnd.endBlock && (
+                    <Text fontSize="sm">{`est. time: ${timeRemaining(
+                      blockHeight,
+                      contractStartEnd.endBlock
+                    )}`}</Text>
+                  )}
+                </>
               )}
             </SkeletonText>
           </VStack>
