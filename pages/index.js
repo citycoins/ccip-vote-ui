@@ -46,7 +46,7 @@ const ccip = {
     "The vote will start at Stacks block 74,300 and last approximately 2 weeks. For more details, see CCIP-012.",
   ],
   contractAddress: "SP119FQPVQ39AKVMC0CN3Q1ZN3ZMCGMBR52ZS5K6E",
-  contractName: "operational-chocolate-seahorse",
+  contractName: "citycoins-vote-v2",
   readForYourself: [
     {
       id: "CCIP-012",
