@@ -43,7 +43,7 @@ const ccip = {
     "Community discussions and feedback have resulted in a four-phase proposal designed to stabilize the protocol. The phases have been split into two separate CityCoins Improvement Proposals (CCIPs).",
     "CCIP-012 is the first of two proposals that will be voted on by the community. This proposal includes a 2% emissions model and moving treasuries to smart contract vaults.",
     "Votes will be recorded by a smart contract and tallied based on the amount an address has stacked in MiamiCoin cycles 21 and 22 and NewYorKCityCoin cycles 15 and 16.",
-    "The vote will start at Stacks block 74,300 and last approximately 2 weeks. For more details, see CCIP-012.",
+    "The vote will start at Stacks block 74,300 and end at Stacks block 76,400, lasting approximately 2 weeks. For more details, see CCIP-012.",
   ],
   contractAddress: "SP119FQPVQ39AKVMC0CN3Q1ZN3ZMCGMBR52ZS5K6E",
   contractName: "citycoins-vote-v2",
@@ -166,7 +166,7 @@ export default function Home() {
             <SkeletonText isLoaded={!loading} noOfLines={1}>
               {status !== "not_initialized" && (
                 <Text fontSize="sm">
-                  {`Voting Active Blocks ${contractStartEnd.startBlock} - ${contractStartEnd.endBlock}`}
+                  {`Voting Period: ${contractStartEnd.startBlock.toLocaleString()} - ${contractStartEnd.endBlock.toLocaleString()}`}
                 </Text>
               )}
               {status === "not_initialized" && (
@@ -177,24 +177,24 @@ export default function Home() {
               {status === "active" && (
                 <>
                   <Text fontSize="sm">
-                    {`Voting Active! Vote ends in ${active} block${
+                    {`Voting Active! Vote ends in ${active.toLocaleString()} block${
                       active > 1 ? "s" : ""
                     }`}
                   </Text>
                 </>
               )}
-
               {status === "not_started_yet" && (
                 <Text fontSize="sm">
-                  {`Vote starts in ${not_started_yet} block${
+                  {`Vote starts in ${not_started_yet.toLocaleString()} block${
                     not_started_yet > 1 ? "s" : ""
                   }`}
                 </Text>
               )}
-
               {status === "over" && (
                 <Text fontSize="sm">
-                  {`Vote ended ${over} block${over == 1 ? "" : "s"} ago`}
+                  {`Vote ended ${over.toLocaleString()} block${
+                    over == 1 ? "" : "s"
+                  } ago`}
                 </Text>
               )}
             </SkeletonText>
@@ -291,7 +291,7 @@ export default function Home() {
           </Section>
           <Section>
             <VStack spacing={10} align="start" fontSize="1xl">
-              <Heading size="lg">CCIPS</Heading>
+              <Heading size="lg">Resources</Heading>
               {ccip.readForYourself.map((read) => {
                 return (
                   <Link
@@ -300,7 +300,7 @@ export default function Home() {
                     key={read.id}
                     fontSize={{ base: "xs", md: "lg" }}
                   >
-                    Read {read.id}: {read.title}
+                    {read.id}: {read.title}
                     <ArrowForwardIcon marginLeft={4} />
                   </Link>
                 );
