@@ -157,6 +157,30 @@ export default function Home() {
   const not_started_yet = contractStartEnd?.startBlock - blockHeight;
   const over = blockHeight - contractStartEnd?.endBlock;
 
+  const timeRemaining = (currentBlock, targetBlock) => {
+    let suffix = "";
+    let blockDifference = +targetBlock - +currentBlock;
+    const minutes = blockDifference * 10;
+    const hours = minutes / 60;
+    const days = hours / 24;
+    if (blockDifference < 0) {
+      suffix = " passed";
+      blockDifference *= -1;
+    } else {
+      suffix = " remaining";
+    }
+    const message = () => {
+      if (days > 1) return `${days.toFixed(2)} days`;
+      if (hours > 1) return `${hours.toFixed(2)} hours`;
+      return `${minutes.toFixed(2)} minutes`;
+    };
+    return `${message()}${suffix}`;
+  };
+
+  // if days greater than 1, return days
+  // if hours greater than 1, return hours
+  // return minutes
+
   return (
     <PageTransition>
       <Box>
@@ -184,11 +208,19 @@ export default function Home() {
                 </>
               )}
               {status === "not_started_yet" && (
-                <Text fontSize="sm">
-                  {`Vote starts in ${not_started_yet.toLocaleString()} block${
-                    not_started_yet > 1 ? "s" : ""
-                  }`}
-                </Text>
+                <>
+                  <Text fontSize="sm">
+                    {`Vote starts in ${not_started_yet.toLocaleString()} block${
+                      not_started_yet > 1 ? "s" : ""
+                    }`}
+                  </Text>
+                  {contractStartEnd.endBlock && (
+                    <Text fontSize="sm">{`est. time: ${timeRemaining(
+                      blockHeight,
+                      contractStartEnd.startBlock
+                    )}`}</Text>
+                  )}
+                </>
               )}
               {status === "over" && (
                 <Text fontSize="sm">
