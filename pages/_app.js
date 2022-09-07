@@ -16,8 +16,8 @@ function MyApp({ Component, pageProps }) {
     <MicroStacksProvider
       authOptions={{
         appDetails: {
-          name: "ccip-012",
-          icon: "logo",
+          name: "CCIP-012 Vote",
+          icon: "https://stabilize.minecitycoins.com/android-icon-192x192.png",
         },
       }}
     >
