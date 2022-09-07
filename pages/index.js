@@ -42,7 +42,6 @@ const ccip = {
     "Over the summer, CityCoiners have been working on a plan to stabilize the protocol and optimize for future development, experimentation, and growth.",
     "Community discussions and feedback have resulted in a four-phase proposal designed to stabilize the protocol. The phases have been split into two separate CityCoins Improvement Proposals (CCIPs).",
     "CCIP-012 is the first of two proposals that will be voted on by the community. This proposal includes a 2% emissions model and moving treasuries to smart contract vaults.",
-    "Votes will be recorded by a smart contract and tallied based on the amount an address has stacked in MiamiCoin cycles 21 and 22 and NewYorKCityCoin cycles 15 and 16.",
     "The vote will start at Stacks block 74,300 and end at Stacks block 76,400, lasting approximately 2 weeks. For more details, see CCIP-012.",
   ],
   contractAddress: "SP119FQPVQ39AKVMC0CN3Q1ZN3ZMCGMBR52ZS5K6E",
@@ -183,7 +182,7 @@ export default function Home() {
         <VStack spacing={10}>
           <VStack textAlign="center">
             <Heading size="xl">CityCoins Upgrade Vote</Heading>
-            <SkeletonText isLoaded={!loading} noOfLines={2}>
+            <SkeletonText isLoaded={!loading} noOfLines={3}>
               {status !== "not_initialized" && (
                 <Text fontSize="sm">
                   {`Voting Period: ${contractStartEnd.startBlock.toLocaleString()} - ${contractStartEnd.endBlock.toLocaleString()}`}
@@ -275,6 +274,31 @@ export default function Home() {
               </Flex>
             </Flex>
           </Section>
+          <Section>
+            <VStack spacing={10} align="start" fontSize="1xl">
+              <Heading size="lg">Voting</Heading>
+              <Text>
+                Votes are recorded by a smart contract and tallied based on the
+                amount an address has stacked in MiamiCoin cycles 21 and 22 and
+                NewYorKCityCoin cycles 15 and 16. The full calculation is
+                available in CCIP-012.
+              </Text>
+              <Text>
+                If you did not stack during these cycles and attempt to vote,
+                then the vote transaction will fail. If you would like to check
+                your stacking status before voting, please see the{" "}
+                <Link
+                  href="https://fatstx.github.io/stackingnew"
+                  target="_blank"
+                  fontSize={{ base: "xs", md: "lg" }}
+                  color="blue.500"
+                >
+                  FATSTX stacking info
+                </Link>{" "}
+                tool.
+              </Text>
+            </VStack>
+          </Section>
 
           {/* CCIP Voting */}
           {!isSignedIn && status === "active" && (
@@ -321,7 +345,7 @@ export default function Home() {
           {/* CCIP Description */}
           <Section>
             <VStack spacing={10} align="start" fontSize="1xl">
-              <Heading size="lg">Description</Heading>
+              <Heading size="lg">Voting Details</Heading>
               {ccip.descriptions.map((ele, idx) => {
                 return (
                   <Text fontSize={{ base: "xs", md: "lg" }} key={idx}>
