@@ -283,6 +283,21 @@ export default function Home() {
                 NewYorKCityCoin cycles 15 and 16. The full calculation is
                 available in CCIP-012.
               </Text>
+              {/* CCIP Voting */}
+              {!isSignedIn && status === "active" && (
+                <Section>
+                  <Center>
+                    <Button
+                      width={{ base: "100%", md: "90%" }}
+                      variant="solid"
+                      colorScheme="green"
+                      onClick={() => handleSignIn()}
+                    >
+                      Sign In To Vote
+                    </Button>
+                  </Center>
+                </Section>
+              )}
               <Text>
                 If you did not stack during these cycles and attempt to vote,
                 then the vote transaction will fail. If you would like to check
@@ -300,21 +315,6 @@ export default function Home() {
             </VStack>
           </Section>
 
-          {/* CCIP Voting */}
-          {!isSignedIn && status === "active" && (
-            <Section>
-              <Center>
-                <Button
-                  width={{ base: "100%", md: "90%" }}
-                  variant="solid"
-                  colorScheme="green"
-                  onClick={() => handleSignIn()}
-                >
-                  Sign In To Vote
-                </Button>
-              </Center>
-            </Section>
-          )}
           {status === "active" && isSignedIn && (
             <Section>
               <VStack align="start" spacing={10}>
