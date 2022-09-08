@@ -280,7 +280,7 @@ export default function Home() {
               <Text>
                 Votes are recorded by a smart contract and tallied based on the
                 amount an address has stacked in MiamiCoin cycles 21 and 22 and
-                NewYorKCityCoin cycles 15 and 16. The full calculation is
+                NewYorkCityCoin cycles 15 and 16. The full calculation is
                 available in CCIP-012.
               </Text>
               {/* CCIP Voting */}
