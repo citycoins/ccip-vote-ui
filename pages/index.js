@@ -182,7 +182,7 @@ export default function Home() {
         <VStack spacing={10}>
           <VStack textAlign="center">
             <Heading size="xl">CityCoins Upgrade Vote</Heading>
-            <SkeletonText isLoaded={!loading} noOfLines={3}>
+            <SkeletonText isLoaded={!loading} noOfLines={2}>
               {status !== "not_initialized" && (
                 <Text fontSize="sm">
                   {`Voting Period: ${contractStartEnd.startBlock.toLocaleString()} - ${contractStartEnd.endBlock.toLocaleString()}`}
@@ -224,19 +224,11 @@ export default function Home() {
                 </>
               )}
               {status === "over" && (
-                <>
-                  <Text fontSize="sm">
-                    {`Vote ended ${over.toLocaleString()} block${
-                      over == 1 ? "" : "s"
-                    } ago`}
-                  </Text>
-                  {contractStartEnd.endBlock && (
-                    <Text fontSize="sm">{`est. time: ${timeRemaining(
-                      blockHeight,
-                      contractStartEnd.endBlock
-                    )}`}</Text>
-                  )}
-                </>
+                <Text fontSize="sm">
+                  {`Vote ended ${over.toLocaleString()} block${
+                    over == 1 ? "" : "s"
+                  } ago`}
+                </Text>
               )}
             </SkeletonText>
           </VStack>
