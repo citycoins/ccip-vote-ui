@@ -8,7 +8,7 @@ import customTheme from "../theme";
 // generalize SEO meta tags
 const title = "Vote on the CityCoins Upgrade!";
 const description =
-  "Proposed protocol upgrades include 2% emissions model and moving treasuries to smart contract vaults.";
+  "Proposed protocol upgrades including simplifying the CityCoin contract structure under control of the newly formed DAO.";
 const image = "/citycoins-protocol-upgrade.png";
 
 function MyApp({ Component, pageProps }) {
@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
     <MicroStacksProvider
       authOptions={{
         appDetails: {
-          name: "CCIP-012 Vote",
+          name: "CCIP-013 Vote",
           icon: "https://stabilize.minecitycoins.com/android-icon-192x192.png",
         },
       }}

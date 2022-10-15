@@ -41,12 +41,18 @@ const ccip = {
   descriptions: [
     "Over the summer, CityCoiners have been working on a plan to stabilize the protocol and optimize for future development, experimentation, and growth.",
     "Community discussions and feedback have resulted in a four-phase proposal designed to stabilize the protocol. The phases have been split into two separate CityCoins Improvement Proposals (CCIPs).",
-    "CCIP-012 is the first of two proposals that will be voted on by the community. This proposal includes a 2% emissions model and moving treasuries to smart contract vaults.",
-    "The vote will start at Stacks block 74,300 and end at Stacks block 76,400, lasting approximately 2 weeks. For more details, see CCIP-012.",
+    "CCIP-012 is the first of two proposals that will be voted on by the community. The proposal included a 2% emissions model and moving treasuries to smart contract vaults, and is now implemented.",
+    "CCIP-013 is the second of two proposals, including simplifying the CityCoin contract structure under control of the newly formed DAO, and updating the mining and stacking value flows.",
+    "The vote will start at Stacks block 79,750 and end at Stacks block 81,850, lasting approximately 2 weeks. For more details, see CCIP-013.",
   ],
-  contractAddress: "SP119FQPVQ39AKVMC0CN3Q1ZN3ZMCGMBR52ZS5K6E",
-  contractName: "citycoins-vote-v2",
+  contractAddress: "SP5X6BFPYXTZ8C63EYYPA02X2VQTG4V43XNPGAPF",
+  contractName: "citycoins-vote-v3",
   readForYourself: [
+    {
+      id: "CCIP-013",
+      url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-013/ccip-013-stabilize-protocol-and-simplify-contracts.md",
+      title: "Stabilize Protocol and Simplify Contracts",
+    },
     {
       id: "CCIP-012",
       url: "https://github.com/citycoins/governance/blob/main/ccips/ccip-012/ccip-012-stabilize-emissions-and-treasuries.md",
@@ -243,7 +249,7 @@ export default function Home() {
                     "0,0"
                   )}
                   description={`${voteTotals?.yesCount || 0} votes`}
-                  src="https://media.giphy.com/media/3o6UB3VhArvomJHtdK/giphy.gif"
+                  src="https://media.giphy.com/media/xT9IgKWQeoclWggTDO/giphy.gif"
                   voteTotals={voteTotals && createYes(voteTotals)}
                   loading={loading}
                 />
@@ -254,7 +260,7 @@ export default function Home() {
               <Flex width={{ base: "100%", md: "66%" }}>
                 <VoteCard
                   title="Against"
-                  src="https://media.giphy.com/media/3o7TKGVqdQdyGb3aDe/giphy.gif"
+                  src="https://media.giphy.com/media/l0HU0kPyqOqPg08UM/giphy.gif"
                   subtitle={numeral(fromMicro(voteTotals?.noTotal)).format(
                     "0,0"
                   )}
@@ -271,9 +277,9 @@ export default function Home() {
               <Heading size="lg">Voting</Heading>
               <Text>
                 Votes are recorded by a smart contract and tallied based on the
-                amount an address has stacked in MiamiCoin cycles 21 and 22 and
-                NewYorkCityCoin cycles 15 and 16. The full calculation is
-                available in CCIP-012.
+                amount an address has stacked in MiamiCoin cycles 24 and 25 and
+                NewYorkCityCoin cycles 18 and 19. The full calculation is
+                available in CCIP-013.
               </Text>
               {/* CCIP Voting */}
               {!isSignedIn && status === "active" && (
